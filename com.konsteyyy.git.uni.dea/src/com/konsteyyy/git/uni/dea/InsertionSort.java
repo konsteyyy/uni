@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class InsertionSort {
 	
 	public static void sort(int[] A, int p, int r) {
-		for(int j=p; j<r; j++) {
+		for(int j=p; j<=r; j++) {
 			int key = A[j];
 			int i=j-1;
 			while(i>=0 && A[i]>key) {

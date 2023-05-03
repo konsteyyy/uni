@@ -20,11 +20,13 @@ public class MergeInsertionSort {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		String file = args[0];
+		int k = Integer.parseInt(args[1]);
+		
 		ArrayList<Integer> list = new ArrayList<Integer>();		
 
 		//scan file and add all int to list
 		Scanner sc = new Scanner(new File(file));
-		for(int i = 0; sc.hasNextInt(); i++) {
+		while(sc.hasNextInt()) {
 			list.add(sc.nextInt());
 		}
 		
@@ -34,7 +36,7 @@ public class MergeInsertionSort {
 			array[i] = list.get(i);
 		}
 		
-		sort(array, 0, array.length-1, 10);
+		sort(array, 0, array.length-1, k);
 		
 		for(int i=0; i<array.length; i++)
 			System.out.println(array[i]);
