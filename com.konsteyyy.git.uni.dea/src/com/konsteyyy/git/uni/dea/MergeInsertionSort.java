@@ -36,9 +36,13 @@ public class MergeInsertionSort {
 			array[i] = list.get(i);
 		}
 		
+		long start = System.currentTimeMillis();
 		sort(array, 0, array.length-1, k);
+		long ende = System.currentTimeMillis();
 		
 		for(int i=0; i<array.length; i++)
 			System.out.println(array[i]);
+		
+		System.out.println("Benötigte Zeit:" + (ende-start));
 	}
 }

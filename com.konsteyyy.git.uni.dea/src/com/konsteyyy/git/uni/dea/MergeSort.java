@@ -72,6 +72,6 @@ public class MergeSort {
 		for(int i=0; i<array.length; i++)
 			System.out.println(array[i]);
 		
-		System.out.println(ende-start);
+		System.out.println("Benötigte Zeit:" + (ende-start));
 	}
 }
