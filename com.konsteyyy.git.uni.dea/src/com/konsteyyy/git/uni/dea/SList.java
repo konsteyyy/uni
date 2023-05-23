@@ -3,7 +3,7 @@ package com.konsteyyy.git.uni.dea;
 public class SList<T> implements IList<T> {
 	
 	private ListElement<T> head;
-	private int len;
+	
 	//overloaded, to create a List without head
 	public SList() {
 		super();
@@ -16,7 +16,7 @@ public class SList<T> implements IList<T> {
 	@Override
 	public boolean empty() {
 		//if the list length is zero, it is empty
-		return (len == 0);
+		return (size() == 0);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SList<T> implements IList<T> {
 
 	@Override
 	public void deleteLast() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -64,14 +64,25 @@ public class SList<T> implements IList<T> {
 
 	@Override
 	public T get(int pos) {
-		// TODO Auto-generated method stub
-		return null;
+		ListElement<T> current = head;
+		for(int i = pos; i>=0; i--) {
+			if(current.getNext() != null)
+				current = current.getNext();
+			else
+				return null;
+		}
+		return current.getData();
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return this.len;
+		int len = 0;
+		ListElement<T> current = head;
+		while(current.getNext() != null) {
+			current = current.getNext();
+			len++;
+		}
+		return len;
 	}
 	
 	@Override
