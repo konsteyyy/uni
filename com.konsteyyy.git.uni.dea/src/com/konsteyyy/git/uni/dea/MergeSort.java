@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 
 public class MergeSort {
-	
 	public static void sort(int[] A, int p, int r) {
 		if(p<r) {
 			int q = (p+r)/2;
 			sort(A, p, q);
 			sort(A, q+1, r);
 			merge(A, p, q, r);
+			
 		}
 	}
 	
