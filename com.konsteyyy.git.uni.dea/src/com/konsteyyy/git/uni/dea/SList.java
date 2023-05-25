@@ -50,7 +50,7 @@ public class SList<T> implements IList<T> {
 		else {
 			ListElement<T> current = head;
 			//iterate through list until iterator is an element after list or right position reached
-			while(current != null && pos >=0) {
+			while(current != null && pos >1) {
 				current = current.getNext();
 				pos--;
 			}
@@ -71,7 +71,7 @@ public class SList<T> implements IList<T> {
 		}
 		else {
 			ListElement<T> current = head;
-			while(current.getNext() != null && pos >=0) {
+			while(current.getNext() != null && pos >1) {
 				current = current.getNext();
 				pos--;
 			}
@@ -92,27 +92,48 @@ public class SList<T> implements IList<T> {
 
 	@Override
 	public void reverse() {
-		// TODO Auto-generated method stub
+		ListElement<T> prev = null;
+		ListElement<T> current = head;
 		
+		while(current != null) {
+			ListElement<T> temp = current.getNext();
+			current.setNext(prev);
+			prev = current;
+			current = temp;
+		}
+		
+		head = prev;
 	}
 
 	@Override
 	public T get(int pos) {
 		ListElement<T> current = head;
-		for(int i = pos; i>=0; i--) {
+		for(int i = pos; i>0; i--) {
 			if(current.getNext() != null)
 				current = current.getNext();
 			else
-				return null;
+				throw new IndexOutOfBoundsException("Ungültige Position: " + pos);
 		}
 		return current.getData();
+	}
+	
+	//method that does exactly the same as get, but returns the object instead of the data
+	public ListElement<T> getElement(int pos) {
+		ListElement<T> current = head;
+		for(int i = pos; i>0; i--) {
+			if(current.getNext() != null)
+				current = current.getNext();
+			else
+				throw new IndexOutOfBoundsException("Ungültige Position: " + pos);
+		}
+		return current;
 	}
 
 	@Override
 	public int size() {
 		int len = 0;
 		ListElement<T> current = head;
-		while(current.getNext() != null) {
+		while(current != null) {
 			current = current.getNext();
 			len++;
 		}
