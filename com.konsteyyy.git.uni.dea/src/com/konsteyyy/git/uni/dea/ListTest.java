@@ -8,12 +8,12 @@ public class ListTest {
 		
 		IList<Integer> liste;
 		String listType = args[0];
-		String test = "slist";
-		if(listType == test) {
+		
+		if(listType.equals("slist")) {
 			liste = new SList<Integer>();
 			doActions(liste);
 		}
-		else if(listType == "dlist") {
+		else if(listType.equals("dlist")) {
 			liste = new DList<Integer>();
 			doActions(liste);
 		}
@@ -26,6 +26,7 @@ public class ListTest {
 		char action;
 		do {
 			System.out.println("Welche aktion soll ausgeführt werden? (a/i/d/g/r/p/c/s/e):");
+			//action only collects first letter. so every word is possible, only the first letter matters
 			action = sc.next().charAt(0);
 			switch(action) {
 			case 'a':
@@ -61,6 +62,9 @@ public class ListTest {
 				break;
 			case 's':
 				System.out.println(liste.size());
+				break;
+			case 'o':
+				System.out.println(liste.empty());
 				break;
 			default:
 				break;
