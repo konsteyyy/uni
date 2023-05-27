@@ -41,29 +41,40 @@ public class DList<T> implements IList<T> {
 	
 	@Override
 	public void insert(T el, int pos) {
-		DListElement<T> newElement = new DListElement<T>(el);
-		if(pos == 0) {
-			newElement.setNext(head);
-			head.setPrev(newElement);
-			head = newElement;
-		} else if(pos == size()-1) {
-			append(el);			
-		} else {
-			DListElement<T> current = head;
-			while(current != null && pos>1) {
-				current = current.getNext();
-				pos--;
-			}
-			if(current != null) {
-				newElement.setNext(current.getNext());
-				newElement.setPrev(current);
-				current.setNext(newElement);
-				current.getNext().setPrev(newElement);
-			} else {
-				throw new IndexOutOfBoundsException("Ungültige Position: " + pos);
-			}
-		}
+	    DListElement<T> newElement = new DListElement<T>(el);
+	    
+	    //if pos==0, then new element is head
+	    if (pos == 0) {
+	    	newElement.setNext(head);
+	    	if(empty())
+	    		append(el);
+	    	else
+	    		head.setPrev(newElement);
+		        head = newElement;
+	    } else {
+	    	DListElement<T> current = head;
+	    	while(current!=null && pos>1) {
+	    		current = current.getNext();
+	    		pos--;
+	    	}
+	    	
+	    	if (current != null) {
+	    		// new Element gets pos-1 und pos as new prev and next
+	            newElement.setNext(current.getNext());
+	            newElement.setPrev(current);
+	            if (current.getNext() != null) {
+	                current.getNext().setPrev(newElement);
+	            }
+	            current.setNext(newElement);
+	            if (current == tail) {
+	                tail = newElement;
+	            }
+	        } else {
+	            throw new IndexOutOfBoundsException("Ungültige Position: " + pos);
+	        }
+	    }
 	}
+
 
 	@Override
 	public void delete(int pos) {
