@@ -1,4 +1,4 @@
-package com.konsteyyy.git.uni.dea;
+package com.konsteyyy.git.uni.dea.list;
 
 public class SList<T> implements IList<T> {
 	

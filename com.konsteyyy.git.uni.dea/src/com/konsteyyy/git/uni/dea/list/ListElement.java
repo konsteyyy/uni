@@ -1,4 +1,4 @@
-package com.konsteyyy.git.uni.dea;
+package com.konsteyyy.git.uni.dea.list;
 
 public class ListElement<T> {
 	private T data;

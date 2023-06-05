@@ -1,4 +1,4 @@
-package com.konsteyyy.git.uni.dea;
+package com.konsteyyy.git.uni.dea.mergeinsertionsort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
