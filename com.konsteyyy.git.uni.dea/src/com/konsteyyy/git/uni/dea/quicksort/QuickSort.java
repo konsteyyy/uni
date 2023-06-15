@@ -22,8 +22,8 @@ public class QuickSort {
 	
 	private static int PARTITION(int[] A, int l, int r, String strategy) {
 		int p  = switch(strategy) {
-			case "first" -> l; //das erste Element des aktuellen TEilfeldes wird das Pivotelement sein
-			case "random" -> random(A, l, r); //ein zufälliges Element des Teilfeldes wird das Pivotelement sein
+			case "first" -> l; //das erste Element des aktuellen Teilfeldes wird das Pivotelement sein
+			case "random" -> random(l, r); //ein zufälliges Element des Teilfeldes wird das Pivotelement sein
 			case "median3" -> median3(A, l, r); //ein median aus drei zufällig gewählten Elementen des teilfeldes wird ausgewählt
 			default -> -1;
 		};
@@ -44,7 +44,7 @@ public class QuickSort {
 		return i+1;
 	}
 
-	private static int random(int[] A, int l, int r) {
+	private static int random(int l, int r) {
 		return l + (int) (Math.random() * (r - l + 1));
 	}
 
