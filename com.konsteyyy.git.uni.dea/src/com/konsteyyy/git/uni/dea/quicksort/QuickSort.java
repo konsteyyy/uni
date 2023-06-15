@@ -88,9 +88,9 @@ public class QuickSort {
 			array[i] = list.get(i);
 		}
 		
-		long start = System.nanoTime();
+		long start = System.currentTimeMillis();
 		sort(array, strategy);
-		long ende  = System.nanoTime();
+		long ende  = System.currentTimeMillis();
 		
 		for(int i=0; i<array.length; i++)
 			System.out.println(array[i]);
