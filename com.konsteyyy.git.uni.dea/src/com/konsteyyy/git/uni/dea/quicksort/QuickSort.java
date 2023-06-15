@@ -1,37 +1,101 @@
+
 package com.konsteyyy.git.uni.dea.quicksort;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class QuickSort {
 	public static void sort(int[] A, String strategy) {
+		QSORT(A, 0, A.length-1, strategy);
+	}
+	
+	private static void QSORT(int[] A, int l, int r, String strategy)  {
+		if(l>=r) return;
+		//Abbruch bei leerem oder einelementigem Feld
+		
+		int q = PARTITION(A, l, r, strategy);
+		QSORT(A, l, q-1, strategy);
+		QSORT(A, q+1, r, strategy);
+	}
+	
+	private static int PARTITION(int[] A, int l, int r, String strategy) {
 		int p  = switch(strategy) {
-			case "first" -> A[0];
-			case "random" -> random(A);
-			case "median3" -> median3(A);
+			case "first" -> l; //das erste Element des aktuellen TEilfeldes wird das Pivotelement sein
+			case "random" -> random(A, l, r); //ein zufälliges Element des Teilfeldes wird das Pivotelement sein
+			case "median3" -> median3(A, l, r); //ein median aus drei zufällig gewählten Elementen des teilfeldes wird ausgewählt
 			default -> -1;
 		};
 		
+		int x = A[p]; //x ist Pivotelement
 		
-	}
-	
-	private static void QSORT(int[] A)
-	
-	private static int random(int[] A) {
-		return (int) Math.random() * A.length;
+		//vertausche A[p] und A[r]
+		swapItems(A, p, r);
+		
+		int i = l-1;
+		for(int j=l; j<=r-1; j++) {
+			if(A[j] <= x) {
+				i++;
+				swapItems(A,i,j);
+			}
+		}
+		swapItems(A, i+1, r);
+		return i+1;
 	}
 
-	private static int median3(int[] A) {
-		int i = (int) Math.random() * A.length;
-		int j;
-		int k;
-		do {
-			j = (int) Math.random() * A.length;
-			k = (int) Math.random() * A.length;
-		} while(i!=j && i!=k && j!=k);
+	private static int random(int[] A, int l, int r) {
+		return l + (int) (Math.random() * (r - l + 1));
+	}
+
+	private static int median3(int[] A, int l, int r) {
+	    int i = l + (int) (Math.random() * (r - l + 1));
+	    int j;
+	    int k;
+	    do {
+	        j = l + (int) (Math.random() * (r - l + 1));
+	        k = l + (int) (Math.random() * (r - l + 1));
+	    } while (i != j && i != k && j != k);
+
+	    if ((i > j && i < k) || (i < j && i > k)) {
+	        return i;
+	    } else if ((j > i && j < k) || (j < i && j > k)) {
+	        return j;
+	    } else {
+	        return k;
+	    }
+	}
+	
+	private static void swapItems(int[] A, int item1, int item2) {
+		int temp = A[item1];
+		A[item1] = A[item2];
+		A[item2] = temp;
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		String file = args[0];
+		String strategy = args[1];
+		ArrayList<Integer> list = new ArrayList<Integer>();		
+
+		//scan file and add all int to list
+		Scanner sc = new Scanner(new File(file));
+		while(sc.hasNextInt()) {
+			list.add(sc.nextInt());
+		}
 		
-		int[] temp = {A[i], A[j], A[k]};
-		Arrays.sort(temp);
+		//convert the list into an array
+		int[] array = new int[list.size()];
+		for(int i=0; i<array.length; i++) {
+			array[i] = list.get(i);
+		}
 		
-		return temp[1];
+		long start = System.nanoTime();
+		sort(array, strategy);
+		long ende  = System.nanoTime();
+		
+		for(int i=0; i<array.length; i++)
+			System.out.println(array[i]);
+		
+		System.out.println("Benötigte Zeit:" + (ende-start));
 	}
 }
