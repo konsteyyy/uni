@@ -1,4 +1,3 @@
-
 package com.konsteyyy.git.uni.dea.quicksort;
 
 import java.io.File;
