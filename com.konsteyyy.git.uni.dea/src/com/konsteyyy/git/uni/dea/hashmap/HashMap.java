@@ -47,6 +47,18 @@ public class HashMap<Key, Value> {
 			liste.remove(entry);
 	}
 	
+	public HashMap<Value, Key> swapHashMap() {
+		//wir vertauschen value und key
+		HashMap<Value, Key> swappedHashMap = new HashMap<>();
+		
+		for(LinkedList<Entry<Key, Value>> liste : this.hashtable) {
+			for(Entry<Key, Value> entry : liste) {
+				swappedHashMap.put(entry.getValue(), entry.getKey());
+			}
+		}
+		return swappedHashMap;
+	}
+	
 	private int h(Key key) {
 		// Hashfunktion mit Hilfe der Divisionsmethode
 		return Math.abs(key.hashCode()) % this.m;
@@ -77,7 +89,7 @@ public class HashMap<Key, Value> {
                 for (String word : words) {
                     // Entferne Satzzeichen und Leerzeichen am Anfang/Ende des Wortes
                     word = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
+                    
                     if (!word.isEmpty()) {
                     	if(wordCountMap.contains(word)) {
 	                        // Zähle das Wort in der Map
@@ -87,18 +99,14 @@ public class HashMap<Key, Value> {
                     		wordCountMap.put(word, 0);
                     	}
                     }
-                }
-                HashMap<Integer, String> top10 = new HashMap<>();
-                for (String word : words) {
-                    // Entferne Satzzeichen und Leerzeichen am Anfang/Ende des Wortes
-                    word = word.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-                    if (!word.isEmpty()) {
-                    	top10.put(wordCountMap.get(word), word);
-                    }
-                    
-                }
+                }                
             }
+			
+			//jetzt vertauschen wir value und key und können die häufigsten 10 Wörter ausgeben
+			HashMap<Integer, String> top10 = wordCountMap.swapHashMap();
+			for(int i=0; i<10;i++) {
+				System.out.println(top10.get(i)+ " " + i);
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
