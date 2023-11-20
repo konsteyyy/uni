@@ -4,10 +4,11 @@ import java.util.LinkedList;
 
 public class State implements Comparable<State> {
 	private LinkedList<Item> items;
+	public double[] x;
 	private int weight; 
 	private double upperBound;
 	private int level; //gibt an wieviele Objekte bereits betrachtet wurden
-	private boolean validSolution;
+	public int fractionalItemIndex;
 	
 	public State() {}
 	public State(LinkedList<Item> items) {
@@ -41,10 +42,13 @@ public class State implements Comparable<State> {
 	}
 	
 	public boolean isValidSolution() {
-		return validSolution;
-	}
-	public void setValidSolution(boolean validSolution) {
-		this.validSolution = validSolution;
+		for(int i=0; i<x.length; i++) {
+			if(Double.compare(x[i], Math.floor(x[i]))!=0) {
+				this.fractionalItemIndex = i;
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public int getLevel() {

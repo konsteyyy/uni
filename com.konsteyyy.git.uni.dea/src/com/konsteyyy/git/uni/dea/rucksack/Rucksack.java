@@ -12,60 +12,65 @@ public class Rucksack {
 	
 	private static double lowerBound;
 	
-	private static int knapsack(Item[] allItems, int K, int n) {
+	private static double knapsack(Item[] allItems, int K, int n) {
 		// wir sortieren das Array absteigend nach den Verhältnissen zwischen werte und gegenstaende
 		// siehe Item CompareTo Implementierung
 		Arrays.sort(allItems, Collections.reverseOrder());
 		
-		LinkedList<Item> rootItems = new LinkedList<>();
+		//das günstigste Item ist gerade an der Stelle 0 in dem sortierten Array
+		Item optimalItem = allItems[0];
 		
-		//für jedes Item wird berechnet, wie oft dieser maximal in den Rucksack überhaupt passen würde
-		//Wichtig für die Anzahl der Verzweigungen der Knoten
-		int[] numOfItems = new int[n];
-		for(int i=0; i<n; i++) {
-			numOfItems[i] = (int) (K/allItems[i].getWeight());
-		}
-			
-				
-		int totalWeight = 0;
-		// gute Initiale untere Schranke
-		while(totalWeight + allItems[0].getWeight() <= K) {
-			rootItems.add(allItems[0]);
-			totalWeight += allItems[0].getWeight();
-		}
-		// berechne den Wert wenn man das zweite Item noch fraktional mit einfügen würde
-		double restValue = ((K-totalWeight) / allItems[1].getWeight()) * allItems[1].getValue();
-		rootItems.add(new Item(restValue, K-totalWeight));
+		//Wurzelknoten des Zustandsbaums
+		State root = new State();
 		
-		// erstelle daraus ein State
-		State root = new State(rootItems);
-		root.setValidSolution(false);
+		//x gibt die Anzahl jedes Items im Zustand an
+		root.x = new double[allItems.length];
+		//B/a_s ist x_i
+		root.x[0] = K/optimalItem.getWeight();
 		
+		// Hinweis von Prof: K * c_s/a_s ist gerade die obere Schranke
+		root.setUpperBound(K* optimalItem.getRatio());
+		
+		// wir runden x_i vom optimalen Item ab und multiplizieren mit dem Wert vom optimalen Item
+		// wir erhalten eine gültige Lösung -> gültige untere Schranke
+		lowerBound = (int) root.x[0] * optimalItem.getValue();
+
+		//LIFO Queue für eine Tiefensuche
 		Stack<State> stack = new Stack<>();
 		
 		stack.push(root);
 		
-		int maxProfit = 0;
 		
 		//Solange es noch Knoten zu untersuchen gibt
 		while (!stack.isEmpty()) {
 			//Entferne den Knoten zur Untersuchung
 			State current = stack.pop();
 			
-			for(int i=0; i<)
-			
-			// Überprüfen Sie, ob dieser Knoten eine Lösung darstellt
-            // und ob er eine bessere Lösung als die bisher bekannte ist
-			if(current.isValidSolution() && current.getUpperBound() > maxProfit) {
-				maxProfit = (int) current.getUpperBound();
-			} else if (current.getUpperBound() <= maxProfit) {
+			//überprüfe ob dieser Knoten eine gültige Lösung ist und ob der Profit dieses Knotens besser als
+			//der bisher Beste ist.
+			if(current.isValidSolution() && current.getUpperBound() > lowerBound) {
+				//darf zu int gecastet werden, weil wenn gültige Lösung, dann sowieso ganzzahlig
+				lowerBound = (int) current.getUpperBound(); 
+				
+			} else if (current.getUpperBound() <= lowerBound) {
+				//wenn Upperbound sowieso kleiner ist als das bisherige Optimum, dann können wir den Teilbaum überspringen
+				//Pruned by optimality
 				continue;
 			} else {
+				//Lösung ist nicht gültig, wir müssen den Knoten neu verzweigen
+				int currentFIIndex = current.fractionalItemIndex;
+				
+				State newState = new State();
+				
+				newState.x = current.x;
+				
+				newState.x[currentFIIndex] = Math.floor(current.x[currentFIIndex]);
 				
 			}
+			
+			
 		}
-		
-		return 1;
+		return lowerBound;
 	}
 	
 	public static int upperBound(State state, Item nextItem, int K) {
