@@ -59,6 +59,7 @@ public class HashMap<Key, Value> {
 		return swappedHashMap;
 	}
 	
+	
 	private int h(Key key) {
 		// Hashfunktion mit Hilfe der Divisionsmethode
 		return Math.abs(key.hashCode()) % this.m;
@@ -96,7 +97,7 @@ public class HashMap<Key, Value> {
 	                        int count = wordCountMap.get(word);
 	                        wordCountMap.put(word, count + 1);
                     	} else {
-                    		wordCountMap.put(word, 0);
+                    		wordCountMap.put(word, 1);
                     	}
                     }
                 }                
@@ -104,8 +105,13 @@ public class HashMap<Key, Value> {
 			
 			//jetzt vertauschen wir value und key und können die häufigsten 10 Wörter ausgeben
 			HashMap<Integer, String> top10 = wordCountMap.swapHashMap();
-			for(int i=0; i<10;i++) {
-				System.out.println(top10.get(i)+ " " + i);
+			
+			int counter=0;
+			for(int i=997; i>0 && counter<10; i--) {
+				if(top10.contains(i)) {
+					System.out.println(top10.get(i)+ " " + wordCountMap.get(top10.get(i)));
+					counter++;
+				}
 			}
 			
 		} catch (IOException e) {
