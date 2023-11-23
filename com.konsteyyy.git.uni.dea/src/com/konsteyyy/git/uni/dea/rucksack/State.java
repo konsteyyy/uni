@@ -1,65 +1,59 @@
 package com.konsteyyy.git.uni.dea.rucksack;
 
-import java.util.LinkedList;
-
 public class State implements Comparable<State> {
-	private LinkedList<Item> items;
-	public double[] x;
-	private int weight; 
-	private double upperBound;
-	private int level; //gibt an wieviele Objekte bereits betrachtet wurden
-	public int fractionalItemIndex;
+	private int profit;
+	private int weight;
+	private int bound;
+	private int level;
 	
 	public State() {}
-	public State(LinkedList<Item> items) {
-		this.items = items;
-		this.weight =0;
-		this.upperBound =0;
-		for(Item i:items) {
-			this.weight+=i.getWeight();
-			this.upperBound+=i.getValue();
-		}
-	}
-
-	public LinkedList<Item> getItems() {
-		return items;
-	}
-	public void setItems(LinkedList<Item> items) {
-		this.items = items;
+	
+	public State(State other) {
+		this(other.getProfit(), other.getWeight(), other.getBound(), other.getLevel());
 	}
 	
+	public State(int profit, int weight, int bound, int level) {
+		this.profit = profit;
+		this.weight = weight;
+		this.bound = bound;
+		this.level = level;
+	}
+
+	public int getProfit() {
+		return profit;
+	}
+
+	public void setProfit(int profit) {
+		this.profit = profit;
+	}
+
 	public int getWeight() {
 		return weight;
 	}
+
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-	public double getUpperBound() {
-		return upperBound;
+
+	public int getBound() {
+		return bound;
 	}
-	public void setUpperBound(double upperBound) {
-		this.upperBound = upperBound;
+
+	public void setBound(int bound) {
+		this.bound = bound;
 	}
-	
-	public boolean isValidSolution() {
-		for(int i=0; i<x.length; i++) {
-			if(Double.compare(x[i], Math.floor(x[i]))!=0) {
-				this.fractionalItemIndex = i;
-				return false;
-			}
-		}
-		return true;
-	}
-	
+
 	public int getLevel() {
 		return level;
 	}
+
 	public void setLevel(int level) {
 		this.level = level;
 	}
+
 	@Override
 	public int compareTo(State o) {
-		return Double.compare(this.upperBound, o.getUpperBound());
+		return Double.compare(this.bound, o.getBound());
 	}
 	
 }
