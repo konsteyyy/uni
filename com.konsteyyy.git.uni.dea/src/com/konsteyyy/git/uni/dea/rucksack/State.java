@@ -1,59 +1,34 @@
 package com.konsteyyy.git.uni.dea.rucksack;
 
 public class State implements Comparable<State> {
-	private int profit;
-	private int weight;
-	private int bound;
-	private int level;
+	private double[] x;
+	private double upperBound;
 	
 	public State() {}
 	
-	public State(State other) {
-		this(other.getProfit(), other.getWeight(), other.getBound(), other.getLevel());
+	public State(double upperBound) {
+		this.upperBound = upperBound;
+	}
+
+	public double[] getX() {
+		return x;
+	}
+
+	public void setX(double[] x) {
+		this.x = x;
 	}
 	
-	public State(int profit, int weight, int bound, int level) {
-		this.profit = profit;
-		this.weight = weight;
-		this.bound = bound;
-		this.level = level;
+	public double getUpperBound() {
+		return upperBound;
 	}
 
-	public int getProfit() {
-		return profit;
-	}
-
-	public void setProfit(int profit) {
-		this.profit = profit;
-	}
-
-	public int getWeight() {
-		return weight;
-	}
-
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-
-	public int getBound() {
-		return bound;
-	}
-
-	public void setBound(int bound) {
-		this.bound = bound;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
+	public void setUpperBound(double upperBound) {
+		this.upperBound = upperBound;
 	}
 
 	@Override
 	public int compareTo(State o) {
-		return Double.compare(this.bound, o.getBound());
+		return Double.compare(this.upperBound, o.getUpperBound());
 	}
 	
 }
