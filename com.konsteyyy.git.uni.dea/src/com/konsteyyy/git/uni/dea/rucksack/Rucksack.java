@@ -24,14 +24,14 @@ public class Rucksack {
 		State root = new State();
 
 		// initialisiere Array mit x Werten
-		root.setX(new double[allItems.length]);
-		double[] x = root.getX();
+		double[] x = new double[allItems.length];
 
 		// x1 = 2,3 sozusagen
 		x[0] = maxCountItem;
 		for (int i = 1; i < x.length; i++)
 			x[i] = 0;
-
+		
+		//füge Array x dem Knoten hinzu und rechne obere Schranke aus
 		root.setX(x);
 		root.setUpperBound(calculate_bound(x, allItems, K, 0));
 
@@ -79,7 +79,7 @@ public class Rucksack {
 					//wenn die obere Schranke schlechter als das aktuelle Minimum ist, schneide ab und überspringe den Teilbaum
 					if (newState.getUpperBound() < lowerBound) {
 						continue;
-					} else {
+					} else { // ansonsten füge dem Stack hinzu und untersuche den Teilbaum weiter
 						stack.push(newState);
 					}
 				}
@@ -122,10 +122,12 @@ public class Rucksack {
 			int weight = sc.nextInt();
 			int value = sc.nextInt();
 			items[i] = new Item(value, weight);
-			System.out.println(items[i].getValue() +" "+ items[i].getWeight());
 		}
-
-		System.out.println(knapsack(items, K, n));
+		long start = System.currentTimeMillis();
+		System.out.println("Optimaler Wert: " +knapsack(items, K, n));
+		long ende  = System.currentTimeMillis();
+		
+		System.out.println("Benötigte Zeit: " + (ende-start));
 	}
 
 }

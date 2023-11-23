@@ -6,10 +6,6 @@ public class State implements Comparable<State> {
 	
 	public State() {}
 	
-	public State(double upperBound) {
-		this.upperBound = upperBound;
-	}
-
 	public double[] getX() {
 		return x;
 	}
