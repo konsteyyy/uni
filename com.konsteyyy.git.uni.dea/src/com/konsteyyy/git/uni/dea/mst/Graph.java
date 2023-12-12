@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Graph {
 	
@@ -23,8 +24,8 @@ public class Graph {
 		//da der Graph ungerichtet ist, müssen wir bei beiden Knoten die Adjazenz hinzufügen
 		Edge e1 = new Edge(vertex1, vertex2, cost);
 		Edge e2 = new Edge(vertex2, vertex1, cost);
-		adjacencyList.get(vertex1).add(new Edge(vertex1, vertex2, cost));
-		adjacencyList.get(vertex2).add(new Edge(vertex2, vertex1, cost));
+		adjacencyList.get(vertex1).add(e1);
+		adjacencyList.get(vertex2).add(e2);
 		
 		//in der Liste Edges speichern wir aber jede Kante nur einmal, um Duplikate zu vermeiden
 		Edges.add(e1);
@@ -34,4 +35,11 @@ public class Graph {
 		return Edges;
 	}
 	
+	public Set<Integer> getVertex() {
+		return adjacencyList.keySet();
+	}
+	
+	public int size() {
+		return adjacencyList.size();
+	}
 }

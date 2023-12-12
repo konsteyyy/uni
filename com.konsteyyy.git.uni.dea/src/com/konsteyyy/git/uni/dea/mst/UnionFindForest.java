@@ -1,15 +1,19 @@
 package com.konsteyyy.git.uni.dea.mst;
 
-import java.util.TreeSet;
+import java.util.Set;
 
 public class UnionFindForest {
 
 	private int[] p;
 	private int[] rank;
 	
-	public UnionFindForest(int size) {
+	public UnionFindForest(int size, Set<Integer> vertexes) {
 		p= new int[size];
 		rank = new int[size];
+		
+		for(int i : vertexes) {
+			makeset(i);
+		}
 	}
 	
 	public void makeset(int x) {
@@ -25,10 +29,12 @@ public class UnionFindForest {
 		return p[x];
 	}
 	
-	public void union(int x, int y) {
+	public boolean union(int x, int y) {
 		if(find(x) != find(y)) {
 			link(find(x),find(y));
+			return true;
 		}
+		return false;
 	}
 	
 	public void link(int x, int y) {
